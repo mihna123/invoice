@@ -24,5 +24,5 @@ export const Invoice = z.object({
 });
 
 export type Currency = z.infer<typeof Currency>;
-export type Invice = z.infer<typeof Invoice>;
+export type Invoice = z.infer<typeof Invoice>;
 export type LineItem = z.infer<typeof LineItem>;

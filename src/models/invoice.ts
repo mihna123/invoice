@@ -8,14 +8,20 @@ export const LineItemSchema = z.object({
   rate: z.number(),
 });
 
+const optionalDate = z.preprocess((v) => {
+  if (v === "" || v === null) return undefined;
+  if (v instanceof Date && isNaN(v.getTime())) return undefined;
+  return v;
+}, z.coerce.date().optional());
+
 export const InvoiceSchema = z.object({
   invoice_number: z.number(),
   from: z.string(),
   bill_to: z.string().optional(),
   ship_to: z.string().optional(),
-  date: z.coerce.date().optional(),
+  date: optionalDate,
   payment_terms: z.string().optional(),
-  due_date: z.coerce.date().optional(),
+  due_date: optionalDate,
   po_number: z.string().optional(),
   currency: CurrencyEnum,
   line_items: z.array(LineItemSchema),

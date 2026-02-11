@@ -2,7 +2,12 @@
 
 import { Invoice, InvoiceSchema } from "@/models/invoice";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useFieldArray, useForm, useWatch } from "react-hook-form";
+import {
+  useFieldArray,
+  useForm,
+  useWatch,
+  SubmitHandler,
+} from "react-hook-form";
 import { Input } from "./ui/input";
 import React from "react";
 import { cn } from "@/utils/cn";
@@ -40,8 +45,15 @@ export const InvoiceGenerator = () => {
   const lineItems = useWatch({ control, name: "line_items" });
   const currency = watch("currency", "USD");
 
+  const onSubmit: SubmitHandler<Invoice> = (data) => {
+    console.log(data);
+  };
+
   return (
-    <form className="max-w-5xl rounded-sm border p-4 shadow-lg">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="max-w-5xl rounded-sm border p-4 shadow-lg"
+    >
       <div className="flex justify-between gap-4">
         <section className="grid auto-rows-min grid-cols-2 gap-2">
           <Input
@@ -69,7 +81,7 @@ export const InvoiceGenerator = () => {
           <label>Due Date</label>
           <Input {...register("due_date")} type="date" />
           <label>PO number</label>
-          <Input {...register("po_number", { valueAsNumber: true })} />
+          <Input {...register("po_number")} />
         </section>
       </div>
       <h2>Your Items</h2>
@@ -125,6 +137,9 @@ export const InvoiceGenerator = () => {
           0,
         )}{" "}
         {currency}
+      </section>
+      <section className="mt-4 flex flex-row-reverse">
+        <Button>Download</Button>
       </section>
     </form>
   );

@@ -9,9 +9,11 @@ import {
   SubmitHandler,
 } from "react-hook-form";
 import { Input } from "./ui/input";
-import React from "react";
+import React, { useActionState } from "react";
 import { cn } from "@/utils/cn";
 import { Button } from "./ui/button";
+import { generateInvoiceAction } from "@/lib/actions";
+import { generateInvoice } from "@/lib/generate";
 
 const defaultItem = {
   description: "",
@@ -45,8 +47,17 @@ export const InvoiceGenerator = () => {
   const lineItems = useWatch({ control, name: "line_items" });
   const currency = watch("currency", "USD");
 
-  const onSubmit: SubmitHandler<Invoice> = (data) => {
+  const onSubmit: SubmitHandler<Invoice> = async (data) => {
     console.log(data);
+    const blob = await generateInvoice(data);
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "invoice.pdf";
+    document.body.appendChild(a);
+    a.click();
+
+    document.body.removeChild(a);
+    a.remove();
   };
 
   return (

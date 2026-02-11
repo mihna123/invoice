@@ -55,22 +55,30 @@ export const InvoiceGenerator = () => {
       className="max-w-5xl rounded-sm border p-4 shadow-lg"
     >
       <div className="flex justify-between gap-4">
-        <section className="grid auto-rows-min grid-cols-2 gap-2">
+        <section className="grid auto-rows-min gap-2 md:grid-cols-2">
           <Input
             {...register("from")}
             placeholder="Who is this from?"
-            className="col-span-2"
+            className="md:col-span-2"
           />
           {errors["from"] && (
-            <p className="col-span-2">{errors["from"].message ?? "Error"}</p>
+            <p className="md:col-span-2">{errors["from"].message ?? "Error"}</p>
           )}
           <div className="grid">
             <label>Bill To</label>
-            <Input {...register("bill_to")} placeholder="Who is this for?" />
+            <Input
+              {...register("bill_to")}
+              className="w-full"
+              placeholder="Who is this for?"
+            />
           </div>
           <div className="grid">
             <label>Ship To</label>
-            <Input {...register("ship_to")} placeholder="(optional)" />
+            <Input
+              {...register("ship_to")}
+              className="w-full"
+              placeholder="(optional)"
+            />
           </div>
         </section>
         <section className="grid auto-rows-min grid-cols-2 gap-2">

@@ -126,7 +126,10 @@ export async function generateInvoice(invoice: Invoice): Promise<Blob> {
       currency: invoice.currency,
     });
     const quantity = item.quantity.toString();
-    const rate = item.rate.toString();
+    const rate = item.rate.toLocaleString(undefined, {
+      style: "currency",
+      currency: invoice.currency,
+    });
     doc.text(item.description);
     doc.moveUp();
     doc.text(amount, amountX - doc.widthOfString(amount), doc.y);

@@ -9,10 +9,9 @@ import {
   SubmitHandler,
 } from "react-hook-form";
 import { Input } from "./ui/input";
-import React, { useActionState } from "react";
+import React from "react";
 import { cn } from "@/utils/cn";
 import { Button } from "./ui/button";
-import { generateInvoiceAction } from "@/lib/actions";
 import { generateInvoice } from "@/lib/generate";
 
 const defaultItem = {
@@ -113,12 +112,11 @@ export const InvoiceGenerator = () => {
         <p className="col-span-7">Item</p>
         <p className="pl-2">Quantity</p>
         <p className="pl-2">Rate</p>
-        <p className="text-center">Amount</p>
-        <p className="pr-2 text-right">Actions</p>
+        <p className="col-span-2 pr-4 text-right">Amount</p>
       </div>
-      <section className="grid grid-cols-11 gap-2">
+      <section className="space-y-2">
         {fields.map((f, ind) => (
-          <React.Fragment key={f.id}>
+          <div key={f.id} className="group relative grid grid-cols-11 gap-2">
             <Input
               {...register(`line_items.${ind}.description`)}
               placeholder="Description of item/service..."
@@ -132,33 +130,50 @@ export const InvoiceGenerator = () => {
             <Input
               {...register(`line_items.${ind}.rate`, { valueAsNumber: true })}
             />
-            <p className="m-auto text-center">
-              {(lineItems[ind]?.rate ?? 0) * (lineItems[ind]?.quantity ?? 0)}{" "}
-              {currency}
-            </p>
-            <Button
-              type="button"
-              onClick={() => remove(ind)}
-              className="m-auto size-fit"
-            >
-              x
-            </Button>
-          </React.Fragment>
+            <div className="relative col-span-2 my-auto flex justify-end pr-6 text-right">
+              <p>
+                {(
+                  (lineItems[ind]?.rate ?? 0) * (lineItems[ind]?.quantity ?? 0)
+                ).toLocaleString(undefined, { style: "currency", currency })}
+              </p>
+              <Button
+                type="button"
+                onClick={() => remove(ind)}
+                className={cn(
+                  "absolute -right-1 m-auto hidden size-fit",
+                  "border-none group-hover:block hover:text-gray-500",
+                )}
+              >
+                X
+              </Button>
+            </div>
+          </div>
         ))}
-        <Button type="button" onClick={() => append(defaultItem)}>
+        <Button
+          type="button"
+          className="border-green-700 text-green-700 hover:bg-gray-100"
+          onClick={() => append(defaultItem)}
+        >
           + Item
         </Button>
       </section>
-      <section className="text-right text-xl">
+      <section className="pr-6 text-right text-xl">
         Subtotal:{" "}
-        {lineItems.reduce(
-          (acc, cur) => acc + (cur.rate ?? 0) * (cur.quantity ?? 0),
-          0,
-        )}{" "}
-        {currency}
+        <b>
+          {lineItems
+            .reduce(
+              (acc, cur) => acc + (cur.rate ?? 0) * (cur.quantity ?? 0),
+              0,
+            )
+            .toLocaleString(undefined, { style: "currency", currency })}
+        </b>
       </section>
-      <section className="mt-4 flex flex-row-reverse">
-        <Button>Download</Button>
+      <section className={cn("mt-4 flex flex-row-reverse")}>
+        <Button
+          className={cn("border-green-700 text-green-700", "hover:bg-gray-100")}
+        >
+          Download
+        </Button>
       </section>
     </form>
   );

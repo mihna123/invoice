@@ -137,6 +137,24 @@ export async function generateInvoice(invoice: Invoice): Promise<Blob> {
     doc.text("", MARGIN + T_PADDING, doc.y + T_ROW_HEIGHT / 2);
   });
 
+  const total = invoice.line_items.reduce(
+    (acc, cur) => acc + (cur.quantity ?? 0) * (cur.rate ?? 0),
+    0,
+  );
+  const totalText =
+    "Subtotal: " +
+    total.toLocaleString(undefined, {
+      style: "currency",
+      currency: invoice.currency,
+    });
+
+  doc.moveDown(2);
+  doc.fontSize(12);
+  doc.text(
+    totalText,
+    doc.page.width - MARGIN - T_PADDING - doc.widthOfString(totalText),
+  );
+
   doc.end();
   return new Promise((resolve, reject) => {
     stream.on("finish", () => {

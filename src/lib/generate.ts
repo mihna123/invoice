@@ -5,7 +5,7 @@ import PDFDocument from "pdfkit";
 import blobStream from "blob-stream";
 
 const MARGIN = 30;
-const T_CELL_PADDING = 20;
+const T_CELL_PADDING = 30;
 const T_PADDING = 4;
 const T_ROW_HEIGHT = 20;
 
@@ -108,32 +108,32 @@ export async function generateInvoice(invoice: Invoice): Promise<Blob> {
 
   createTableHeader(doc, params);
 
+  const amountX = doc.page.width - MARGIN - T_PADDING;
+  const rateX =
+    amountX -
+    doc.widthOfString(params.amountText) -
+    T_CELL_PADDING -
+    doc.widthOfString(params.rateText) / 2;
+  const quantityX =
+    rateX -
+    doc.widthOfString(params.rateText) / 2 -
+    T_CELL_PADDING -
+    doc.widthOfString(params.quantityText) / 2;
+
   invoice.line_items.forEach((item) => {
-    const amount = (item.quantity * item.rate).toString();
+    const amount = (item.quantity * item.rate).toLocaleString(undefined, {
+      style: "currency",
+      currency: invoice.currency,
+    });
+    const quantity = item.quantity.toString();
+    const rate = item.rate.toString();
     doc.text(item.description);
     doc.moveUp();
-    doc.text(
-      amount,
-      doc.page.width - MARGIN - doc.widthOfString(amount) - T_PADDING,
-      doc.y,
-    );
+    doc.text(amount, amountX - doc.widthOfString(amount), doc.y);
     doc.moveUp();
-    doc.text(
-      item.rate.toString(),
-      doc.x -
-        doc.widthOfString(params.amountText) -
-        doc.widthOfString(item.rate.toString()) / 2 -
-        T_CELL_PADDING,
-      doc.y,
-    );
+    doc.text(rate, rateX - doc.widthOfString(rate) / 2, doc.y);
     doc.moveUp();
-    doc.text(
-      item.quantity.toString(),
-      doc.x -
-        (doc.widthOfString(params.quantityText + item.quantity) / 2 +
-          T_CELL_PADDING),
-      doc.y,
-    );
+    doc.text(quantity, quantityX - doc.widthOfString(quantity) / 2, doc.y);
     doc.text("", MARGIN + T_PADDING, doc.y + T_ROW_HEIGHT / 2);
   });
 

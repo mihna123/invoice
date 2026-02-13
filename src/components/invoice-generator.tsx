@@ -9,7 +9,6 @@ import {
   SubmitHandler,
 } from "react-hook-form";
 import { Input } from "./ui/input";
-import React from "react";
 import { cn } from "@/utils/cn";
 import { Button } from "./ui/button";
 import { generateInvoice } from "@/lib/generate";

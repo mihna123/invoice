@@ -163,6 +163,22 @@ export async function generateInvoice(invoice: Invoice): Promise<Blob> {
     doc.page.width - MARGIN - T_PADDING - doc.widthOfString(totalText),
   );
 
+  // Notes
+  if (invoice.notes) {
+    doc.fontSize(10);
+    doc.moveDown();
+    doc.text('NOTES', MARGIN, doc.y + 10);
+    doc.text(invoice.notes, MARGIN, doc.y);
+  }
+
+  // Terms
+  if (invoice.terms) {
+    doc.fontSize(10);
+    doc.moveDown();
+    doc.text('TERMS', MARGIN, doc.y + 10);
+    doc.text(invoice.terms, MARGIN, doc.y);
+  }
+
   doc.end();
   return new Promise((resolve, reject) => {
     stream.on('finish', () => {

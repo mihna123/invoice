@@ -156,16 +156,34 @@ export const InvoiceGenerator = () => {
           + Item
         </Button>
       </section>
-      <section className="pr-6 text-right text-xl">
-        Subtotal:{' '}
-        <b>
-          {lineItems
-            .reduce(
-              (acc, cur) => acc + (cur.rate ?? 0) * (cur.quantity ?? 0),
-              0,
-            )
-            .toLocaleString(undefined, { style: 'currency', currency })}
-        </b>
+      <section className="mt-2 grid grid-cols-2">
+        <div className="flex flex-col">
+          <label>Notes</label>
+          <textarea
+            {...register('notes')}
+            rows={1}
+            placeholder="Notes - any relevant information not provided before"
+            className="rounded-sm border p-2"
+          />
+          <label>Terms</label>
+          <textarea
+            {...register('terms')}
+            rows={1}
+            placeholder="Terms and conditions"
+            className="rounded-sm border p-2"
+          />
+        </div>
+        <div className="pr-6 text-right text-xl">
+          Total:{' '}
+          <b>
+            {lineItems
+              .reduce(
+                (acc, cur) => acc + (cur.rate ?? 0) * (cur.quantity ?? 0),
+                0,
+              )
+              .toLocaleString(undefined, { style: 'currency', currency })}
+          </b>
+        </div>
       </section>
       <section className={cn('mt-4 flex flex-row-reverse')}>
         <Button

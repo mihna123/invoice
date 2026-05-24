@@ -145,22 +145,30 @@ export async function generateInvoice(invoice: Invoice): Promise<Blob> {
     doc.text('', MARGIN + T_PADDING, doc.y + T_ROW_HEIGHT / 2);
   });
 
+  /** Total */
+  doc.moveDown(2);
+  doc.fontSize(12);
+
+  // separator
+  doc.moveTo(MARGIN, doc.y + 5);
+  doc.lineTo(doc.page.width - MARGIN, doc.y + 5).stroke();
+  doc.moveDown();
+
   const total = invoice.line_items.reduce(
     (acc, cur) => acc + (cur.quantity ?? 0) * (cur.rate ?? 0),
     0,
   );
-  const totalText =
-    'Total: ' +
-    total.toLocaleString(undefined, {
-      style: 'currency',
-      currency: invoice.currency,
-    });
+  const totalCurrency = total.toLocaleString(undefined, {
+    style: 'currency',
+    currency: invoice.currency,
+  });
 
-  doc.moveDown(2);
-  doc.fontSize(12);
+  doc.text('Total', MARGIN + T_PADDING);
+  doc.moveUp();
+
   doc.text(
-    totalText,
-    doc.page.width - MARGIN - T_PADDING - doc.widthOfString(totalText),
+    totalCurrency,
+    doc.page.width - MARGIN - T_PADDING - doc.widthOfString(totalCurrency),
   );
 
   // Notes

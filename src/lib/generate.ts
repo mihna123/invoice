@@ -97,6 +97,9 @@ export async function generateInvoice(invoice: Invoice): Promise<Blob> {
     doc.text("DETAILS");
     doc.text("Po number: " + invoice.po_number);
     doc.text("", MARGIN, doc.y + 10);
+  } else {
+    doc.moveDown(2);
+    doc.text("", MARGIN, doc.y + 10);
   }
 
   const params = {

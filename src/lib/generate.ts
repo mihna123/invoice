@@ -148,7 +148,7 @@ export async function generateInvoice(invoice: Invoice): Promise<Blob> {
     0,
   );
   const totalText =
-    "Subtotal: " +
+    "Total: " +
     total.toLocaleString(undefined, {
       style: "currency",
       currency: invoice.currency,

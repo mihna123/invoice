@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Free Invoices',
+  title: 'Free Invoice Generator',
   description: 'Generate invoices for free',
 };
 

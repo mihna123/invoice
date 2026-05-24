@@ -9,6 +9,11 @@ const T_CELL_PADDING = 30;
 const T_PADDING = 4;
 const T_ROW_HEIGHT = 20;
 
+const GRAY_COLOR = '#5e5e5e';
+
+const FONT_BOLD = 'Helvetica-Bold';
+const FONT_NORMAL = 'Helvetica';
+
 const createTableHeader = (
   doc: PDFKit.PDFDocument,
   params: {
@@ -18,6 +23,7 @@ const createTableHeader = (
     amountText: string;
   },
 ) => {
+  doc.font(FONT_BOLD);
   doc.rect(doc.x, doc.y, doc.page.width - MARGIN * 2, T_ROW_HEIGHT).fill();
   doc.fontSize(10).fillColor('white');
   doc.text(params.itemText, MARGIN + T_PADDING, doc.y + 6);
@@ -50,6 +56,7 @@ const createTableHeader = (
   );
   doc.fontSize(10).fillColor('black');
   doc.text('', MARGIN + T_PADDING, doc.y + T_ROW_HEIGHT / 2);
+  doc.font(FONT_NORMAL);
 };
 
 export async function generateInvoice(invoice: Invoice): Promise<Blob> {
@@ -74,9 +81,12 @@ export async function generateInvoice(invoice: Invoice): Promise<Blob> {
   }
 
   // Separator
+  doc.lineWidth(4);
+  doc.strokeColor(GRAY_COLOR);
   doc.moveTo(MARGIN, doc.y + 5);
   doc.lineTo(doc.page.width - MARGIN, doc.y + 5).stroke();
-  doc.moveDown();
+  doc.strokeColor('black');
+  doc.moveDown(2);
 
   // Invoice title
   doc.fontSize(24);
@@ -134,8 +144,10 @@ export async function generateInvoice(invoice: Invoice): Promise<Blob> {
       currency: invoice.currency,
     });
     if (item.description) {
+      doc.font(FONT_BOLD);
       doc.text(item.description);
       doc.moveUp();
+      doc.font(FONT_NORMAL);
     }
     doc.text(amount, amountX - doc.widthOfString(amount), doc.y);
     doc.moveUp();
@@ -150,8 +162,11 @@ export async function generateInvoice(invoice: Invoice): Promise<Blob> {
   doc.fontSize(12);
 
   // separator
+  doc.lineWidth(2);
+  doc.strokeColor(GRAY_COLOR);
   doc.moveTo(MARGIN, doc.y + 5);
   doc.lineTo(doc.page.width - MARGIN, doc.y + 5).stroke();
+  doc.strokeColor('black');
   doc.moveDown();
 
   const total = invoice.line_items.reduce(
@@ -162,29 +177,38 @@ export async function generateInvoice(invoice: Invoice): Promise<Blob> {
     style: 'currency',
     currency: invoice.currency,
   });
-
-  doc.text('Total', MARGIN + T_PADDING);
+  doc.font(FONT_BOLD);
+  doc.text('Total:', MARGIN + T_PADDING);
   doc.moveUp();
 
   doc.text(
     totalCurrency,
     doc.page.width - MARGIN - T_PADDING - doc.widthOfString(totalCurrency),
   );
+  doc.font(FONT_NORMAL);
 
   // Notes
   if (invoice.notes) {
+    doc.fillColor(GRAY_COLOR);
+    doc.font(FONT_BOLD);
     doc.fontSize(10);
     doc.moveDown();
-    doc.text('NOTES', MARGIN, doc.y + 10);
+    doc.text('Notes:', MARGIN, doc.y + 10);
+    doc.font(FONT_NORMAL);
     doc.text(invoice.notes, MARGIN, doc.y);
+    doc.fillColor('black');
   }
 
   // Terms
   if (invoice.terms) {
+    doc.fillColor(GRAY_COLOR);
+    doc.font(FONT_BOLD);
     doc.fontSize(10);
     doc.moveDown();
-    doc.text('TERMS', MARGIN, doc.y + 10);
+    doc.text('Terms:', MARGIN, doc.y + 10);
+    doc.font(FONT_NORMAL);
     doc.text(invoice.terms, MARGIN, doc.y);
+    doc.fillColor('black');
   }
 
   doc.end();

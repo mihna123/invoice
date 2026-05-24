@@ -133,8 +133,10 @@ export async function generateInvoice(invoice: Invoice): Promise<Blob> {
       style: 'currency',
       currency: invoice.currency,
     });
-    doc.text(item.description);
-    doc.moveUp();
+    if (item.description) {
+      doc.text(item.description);
+      doc.moveUp();
+    }
     doc.text(amount, amountX - doc.widthOfString(amount), doc.y);
     doc.moveUp();
     doc.text(rate, rateX - doc.widthOfString(rate) / 2, doc.y);

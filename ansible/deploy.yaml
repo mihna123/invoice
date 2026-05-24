@@ -1,0 +1,119 @@
+- name: Deploy to production
+  hosts: all
+  remote_user: root
+
+  vars:
+    app_dir: "/home/{{ username }}/invoice"
+    nvm_sh_dir: "/home/{{ username }}/.nvm/nvm.sh"
+
+  tasks:
+    - name: Create system user
+      ansible.builtin.user:
+        name: "{{ username }}"
+        group: users
+        create_home: yes
+        shell: /bin/bash
+        append: yes
+
+    - name: Check if invoice directory exists
+      ansible.builtin.file:
+        path: "{{ app_dir }}"
+        state: directory
+        owner: "{{ username }}"
+        group: users
+        mode: "0755"
+
+    - name: Add github to known hosts
+      become: yes
+      become_user: "{{ username }}"
+      shell: |
+        mkdir -p home/{{ username }}/.ssh/
+        ssh-keyscan github.com >> home/{{ username }}/.ssh/known_hosts
+      args:
+        executable: /bin/bash
+
+
+    - name: Checkout repo
+      ansible.builtin.git:
+        repo: "{{ git_repo }}"
+        dest: "{{ app_dir }}"
+        version: main
+        force: yes
+      become: yes
+      become_user: "{{ username }}"
+
+    - name: Check if nvm is installed
+      ansible.builtin.stat:
+        path: "{{ nvm_sh_dir }}"
+      register: nvm_stat
+
+    - name: Install nvm
+      shell: >
+        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh
+        | bash
+      when: not nvm_stat.stat.exists
+      become: yes
+      become_user: "{{ username }}"
+
+    - name: Install node.js
+      shell: |
+        . {{ nvm_sh_dir }}
+        nvm install 24.13.0
+      args:
+        executable: /bin/bash
+        creates: "/home/{{ username }}/.nvm/versions/node/v24.13.0"
+      become: yes
+      become_user: "{{ username }}"
+
+    - name: Install pm2
+      shell: |
+        . {{ nvm_sh_dir }}
+        npm list -g pm2 || npm install -g pm2
+      args:
+        executable: /bin/bash
+      become: yes
+      become_user: "{{ username }}"
+
+    - name: Install deps
+      shell: |
+        . {{ nvm_sh_dir }}
+        npm install
+      args:
+        executable: /bin/bash
+        chdir: "{{ app_dir }}"
+      become: yes
+      become_user: "{{ username }}"
+
+
+    - name: Build nextjs server
+      shell: |
+        . {{ nvm_sh_dir }}
+        npm run build
+      args:
+        executable: /bin/bash
+        chdir: "{{ app_dir }}"
+      become: yes
+      become_user: "{{ username }}"
+
+    - name: Sync .next/static
+      shell: |
+        rsync -avP {{ app_dir }}/.next/static {{ app_dir }}/.next/standalone/.next/
+      become: yes
+      become_user: "{{ username }}"
+
+
+    - name: Sync public dir
+      shell: |
+        rsync -avP {{ app_dir }}/public {{ app_dir }}/.next/standalone/
+      become: yes
+      become_user: "{{ username }}"
+
+    - name: Start/restart pm2 process
+      shell: |
+        . {{ nvm_sh_dir }}
+        pm2 restart invoice-app || pm2 start server.js --name invoice-app
+      args:
+        executable: /bin/bash
+        chdir: "{{ app_dir }}/.next/standalone"
+      become: yes
+      become_user: "{{ username }}"

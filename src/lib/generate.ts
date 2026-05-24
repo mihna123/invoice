@@ -1,8 +1,8 @@
-"use server";
+'use server';
 
-import { Invoice } from "@/models/invoice";
-import PDFDocument from "pdfkit";
-import blobStream from "blob-stream";
+import { Invoice } from '@/models/invoice';
+import PDFDocument from 'pdfkit';
+import blobStream from 'blob-stream';
 
 const MARGIN = 30;
 const T_CELL_PADDING = 30;
@@ -19,7 +19,7 @@ const createTableHeader = (
   },
 ) => {
   doc.rect(doc.x, doc.y, doc.page.width - MARGIN * 2, T_ROW_HEIGHT).fill();
-  doc.fontSize(10).fillColor("white");
+  doc.fontSize(10).fillColor('white');
   doc.text(params.itemText, MARGIN + T_PADDING, doc.y + 6);
   doc.moveUp();
   doc.text(
@@ -48,12 +48,12 @@ const createTableHeader = (
     doc.page.width - MARGIN - doc.widthOfString(params.amountText) - T_PADDING,
     doc.y,
   );
-  doc.fontSize(10).fillColor("black");
-  doc.text("", MARGIN + T_PADDING, doc.y + T_ROW_HEIGHT / 2);
+  doc.fontSize(10).fillColor('black');
+  doc.text('', MARGIN + T_PADDING, doc.y + T_ROW_HEIGHT / 2);
 };
 
 export async function generateInvoice(invoice: Invoice): Promise<Blob> {
-  const doc = new PDFDocument({ size: "A4", margin: MARGIN });
+  const doc = new PDFDocument({ size: 'A4', margin: MARGIN });
   const stream = doc.pipe(blobStream());
 
   // Invoice from
@@ -64,7 +64,7 @@ export async function generateInvoice(invoice: Invoice): Promise<Blob> {
   doc.moveUp();
   doc.fontSize(12);
 
-  const invNumber = "# " + invoice.invoice_number;
+  const invNumber = '# ' + invoice.invoice_number;
   doc.text(invNumber, doc.page.width - MARGIN - doc.widthOfString(invNumber));
 
   if (invoice.date) {
@@ -80,33 +80,33 @@ export async function generateInvoice(invoice: Invoice): Promise<Blob> {
 
   // Invoice title
   doc.fontSize(24);
-  doc.text("INVOICE", MARGIN, doc.y + 3);
+  doc.text('INVOICE', MARGIN, doc.y + 3);
   doc.moveDown();
 
   // Bill to and details
   if (invoice.bill_to) {
     doc.fontSize(8);
-    doc.text("BILL TO");
+    doc.text('BILL TO');
     doc.text(invoice.bill_to);
     doc.moveUp(2);
-    doc.text("", MARGIN + doc.widthOfString("BILL TO") * 3, doc.y);
+    doc.text('', MARGIN + doc.widthOfString('BILL TO') * 3, doc.y);
   }
 
   if (invoice.po_number) {
     doc.fontSize(8);
-    doc.text("DETAILS");
-    doc.text("Po number: " + invoice.po_number);
-    doc.text("", MARGIN, doc.y + 10);
+    doc.text('DETAILS');
+    doc.text('Po number: ' + invoice.po_number);
+    doc.text('', MARGIN, doc.y + 10);
   } else {
     doc.moveDown(2);
-    doc.text("", MARGIN, doc.y + 10);
+    doc.text('', MARGIN, doc.y + 10);
   }
 
   const params = {
-    itemText: "ITEM",
-    quantityText: "QUANTITY",
-    rateText: "RATE",
-    amountText: "AMOUNT",
+    itemText: 'ITEM',
+    quantityText: 'QUANTITY',
+    rateText: 'RATE',
+    amountText: 'AMOUNT',
   };
 
   createTableHeader(doc, params);
@@ -125,12 +125,12 @@ export async function generateInvoice(invoice: Invoice): Promise<Blob> {
 
   invoice.line_items.forEach((item) => {
     const amount = (item.quantity * item.rate).toLocaleString(undefined, {
-      style: "currency",
+      style: 'currency',
       currency: invoice.currency,
     });
     const quantity = item.quantity.toString();
     const rate = item.rate.toLocaleString(undefined, {
-      style: "currency",
+      style: 'currency',
       currency: invoice.currency,
     });
     doc.text(item.description);
@@ -140,7 +140,7 @@ export async function generateInvoice(invoice: Invoice): Promise<Blob> {
     doc.text(rate, rateX - doc.widthOfString(rate) / 2, doc.y);
     doc.moveUp();
     doc.text(quantity, quantityX - doc.widthOfString(quantity) / 2, doc.y);
-    doc.text("", MARGIN + T_PADDING, doc.y + T_ROW_HEIGHT / 2);
+    doc.text('', MARGIN + T_PADDING, doc.y + T_ROW_HEIGHT / 2);
   });
 
   const total = invoice.line_items.reduce(
@@ -148,9 +148,9 @@ export async function generateInvoice(invoice: Invoice): Promise<Blob> {
     0,
   );
   const totalText =
-    "Total: " +
+    'Total: ' +
     total.toLocaleString(undefined, {
-      style: "currency",
+      style: 'currency',
       currency: invoice.currency,
     });
 
@@ -163,10 +163,10 @@ export async function generateInvoice(invoice: Invoice): Promise<Blob> {
 
   doc.end();
   return new Promise((resolve, reject) => {
-    stream.on("finish", () => {
+    stream.on('finish', () => {
       const blob = stream.toBlob();
       resolve(blob);
     });
-    stream.on("error", reject);
+    stream.on('error', reject);
   });
 }

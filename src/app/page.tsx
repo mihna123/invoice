@@ -1,4 +1,4 @@
-import { InvoiceGenerator } from "@/components/invoice-generator";
+import { InvoiceGenerator } from '@/components/invoice-generator';
 
 export default function Home() {
   return (

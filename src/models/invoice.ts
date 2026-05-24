@@ -1,6 +1,6 @@
-import z from "zod";
+import z from 'zod';
 
-export const CurrencyEnum = z.enum(["USD", "EUR", "RSD"]);
+export const CurrencyEnum = z.enum(['USD', 'EUR', 'RSD']);
 
 export const LineItemSchema = z.object({
   description: z.string(),
@@ -9,7 +9,7 @@ export const LineItemSchema = z.object({
 });
 
 const optionalDate = z.preprocess((v) => {
-  if (v === "" || v === null) return undefined;
+  if (v === '' || v === null) return undefined;
   if (v instanceof Date && isNaN(v.getTime())) return undefined;
   return v;
 }, z.coerce.date().optional());

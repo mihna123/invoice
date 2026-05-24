@@ -1,8 +1,9 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   /* config options here */
-  serverExternalPackages: ["pdfkit"],
+  serverExternalPackages: ['pdfkit'],
+  output: 'standalone',
 };
 
 export default nextConfig;

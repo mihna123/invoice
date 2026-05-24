@@ -4,8 +4,8 @@ export const CurrencyEnum = z.enum(['USD', 'EUR', 'RSD']);
 
 export const LineItemSchema = z.object({
   description: z.string(),
-  quantity: z.number(),
-  rate: z.number(),
+  quantity: z.number().min(0, "Quantity can't be less than 0"),
+  rate: z.number().min(0, "Rate can't be less than 0"),
 });
 
 const optionalDate = z.preprocess((v) => {

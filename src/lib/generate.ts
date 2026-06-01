@@ -3,6 +3,7 @@
 import { Invoice } from '@/models/invoice';
 import PDFDocument from 'pdfkit';
 import blobStream from 'blob-stream';
+import path from 'path';
 
 const MARGIN = 30;
 const T_CELL_PADDING = 30;
@@ -11,8 +12,14 @@ const T_ROW_HEIGHT = 20;
 
 const GRAY_COLOR = '#5e5e5e';
 
-const FONT_BOLD = 'Helvetica-Bold';
-const FONT_NORMAL = 'Helvetica';
+const FONT_NORMAL = path.join(
+  process.cwd(),
+  'public/fonts/DejaVuSerifCondensed.ttf',
+);
+const FONT_BOLD = path.join(
+  process.cwd(),
+  'public/fonts/DejaVuSerifCondensed-Bold.ttf',
+);
 
 const createTableHeader = (
   doc: PDFKit.PDFDocument,
@@ -26,7 +33,11 @@ const createTableHeader = (
   doc.font(FONT_BOLD);
   doc.rect(doc.x, doc.y, doc.page.width - MARGIN * 2, T_ROW_HEIGHT).fill();
   doc.fontSize(10).fillColor('white');
-  doc.text(params.itemText, MARGIN + T_PADDING, doc.y + 6);
+  doc.text(
+    params.itemText,
+    MARGIN + T_PADDING,
+    doc.y + doc.heightOfString(params.itemText) / 3,
+  );
   doc.moveUp();
   doc.text(
     params.quantityText,
@@ -62,6 +73,8 @@ const createTableHeader = (
 export async function generateInvoice(invoice: Invoice): Promise<Blob> {
   const doc = new PDFDocument({ size: 'A4', margin: MARGIN });
   const stream = doc.pipe(blobStream());
+
+  doc.font(FONT_NORMAL);
 
   // Invoice from
   doc.fontSize(10);

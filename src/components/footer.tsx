@@ -1,7 +1,7 @@
 export const Footer = () => {
   return (
-    <footer className="w-full bg-gray-400 p-2 text-center">
-      <p className="font-bold text-white">
+    <footer className="w-full border-t p-2 text-center">
+      <p>
         Having issues? Contact me here:{' '}
         <a
           href="mailto:mihailonvojinovic@gmail.com"

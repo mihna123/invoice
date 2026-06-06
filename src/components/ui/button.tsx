@@ -7,7 +7,12 @@ export const Button = ({
   return (
     <button
       {...props}
-      className={cn('rounded-sm border px-2', 'cursor-pointer', className)}
+      className={cn(
+        'rounded-sm border px-2',
+        'cursor-pointer',
+        props.disabled && 'cursor-default',
+        className,
+      )}
     />
   );
 };

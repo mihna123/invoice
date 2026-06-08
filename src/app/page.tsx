@@ -1,4 +1,3 @@
-import { Footer } from '@/components/footer';
 import { InvoiceGenerator } from '@/components/invoice-generator';
 
 export default function Home() {
@@ -7,7 +6,6 @@ export default function Home() {
       <section className="mb-20 flex flex-col items-center">
         <InvoiceGenerator />
       </section>
-      <Footer />
     </main>
   );
 }

@@ -34,3 +34,5 @@ export default async function Blog(props: Params) {
     </section>
   );
 }
+
+export const dynamic = "force-static";

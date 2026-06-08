@@ -37,7 +37,88 @@ makes sense.
 - Clearing your browser storage will wipe all your data
 - Not open source
 
-## 2. Invoice Simple (invoicesimple.com)
+## 2. Invoice Generator (invoicegenerator.com)
+
+[Invoice Generator](https://invoicegenerator.com) is another good option
+for small to medium businesses. It resembles invoice-generator.com a lot
+visually. The green style and drop shadows can make it seem like this was made
+by the same person. What invoicegenerator.com does a tad better is allowing
+users to add nice **digital signatures** and there is more details in the form
+such as adresses, client websites and shipping adresses.
+
+One thing that I am not very fond of is the fact that free tier _(no account)_
+only allows invoices up to the amount of **1000$ invoiced**. This is a very
+weird and a **non logical** constraint since it surely doesn't cost the company
+_(invoicegenerator.com)_ more if users add more items in the invoice.
+
+Another big con for me is that that if a user wants to download an invoice,
+the email is **required**. Something that we and invoice-generator.com
+understand is not a very polite thing to ask for like that.
+
+The invoices and other settings are stored in the browser local storage up
+untill the user creates an account. It is **not clear** how the user data is
+stored after one creates an account. Their privacy policy only talks about IP
+tracking and cookies, but nothing is mentioned about sencitive invoicing data.
+
+_If the busincess owners have more details on this they can let me know and we
+will update this list._
+
+All in all a good and solid website packed with usefull features. Visually it
+is probably the best on this list. Stuff lacking is focus on user privacy and
+seemingly weird free tier constrains.
+
+### Invoice Generator Pros
+
+- Good UI
+- A lot of available invoice details
+- Good dashboard with nice charts
+
+### Invoice Generator Cons
+
+- Unclear data storing policy
+- No way to download anonimously
+- Seemingly weird and anoying free tier limits
+
+## 3. Invoice Maker (invoicemaker.com)
+
+[Invoice Maker](https://invoicemaker.com) is a very simple to use invoice
+generating website. The website itself is very nicely designed. Form is simple
+but good enough for any kind of invoice.
+
+This website offers a very nice value for the free, no account tier. You can
+create an invoice anonimously and download a pdf, after which they will
+politely ask for your email address, you can of course reject this offer
+_(invoicegenerator.com could learn something from this)_.
+
+Invoice maker also has a very bih asortment of free pdf and excel templates
+that are surelly useful even by themselves.
+
+Generated invoice looks good, except there is a big ugly
+"Made with Invoice Maker" tag at the bottom. I don't think anyone will see that
+and head over to the website _(maybe I am wrong tho)_. There is no way to
+customize the invoice with the accountless tier.
+
+Everything they did good in the accountless tier, they ruined with the free
+account tier. This one gives you 0 invoices. So while you had no account you
+had more rights on this website. Totally weird behaviour. Why punish me for
+wanting to sign up to your service?
+
+All in all a good experience while not signed in, only thing is that there is
+no way to save your invoices up untill you start to pay some of the
+subscription plans.
+
+### Invoice Maker Pros
+
+- There is a preview you can use before download
+- No need for an account to generate an invoice
+
+### Invoice Maker Cons
+
+- Made with "Invoice Maker" tag at the bottom of invoices
+- Free account tier totally useless
+- No invoice saving untill a paid tier
+
+## 4. Invoice Simple (invoicesimple.com)
 
 [Invoice Simple](https://www.invoicesimple.com) is an option with maybe the
 largest amount of features on this list. Invoice Simple goes a couple of steps
@@ -84,86 +165,6 @@ using it.
 - In order to download a pdf you need a subscription
 - A lot of bugs
 
-## 3. Invoice Generator (invoicegenerator.com)
-
-[Invoice Generator](https://invoicegenerator.com) is another good option
-for small to medium businesses. It resembles invoice-generator.com a lot
-visually. The green style and drop shadows can make it seem like this was made
-by the same person. What invoicegenerator.com does a tad better is allowing
-users to add nice **digital signatures** and there is more details in the form
-such as adresses, client websites and shipping adresses.
-
-One thing that I am not very fond of is the fact that free tier _(no account)_
-only allows invoices up to the amount of **1000$ invoiced**. This is a very
-weird and a **non logical** constraint since it surely doesn't cost the company
-_(invoicegenerator.com)_ more if users add more items in the invoice.
-
-Another big con for me is that that if a user wants to download an invoice,
-the email is **required**. Something that we and invoice-generator.com
-understand is not a very polite thing to ask for like that.
-
-The invoices and other settings are stored in the browser local storage up
-untill the user creates an account. It is **not clear** how the user data is
-stored after one creates an account. Their privacy policy only talks about IP
-tracking and cookies, but nothing is mentioned about sencitive invoicing data.
-
-_If the busincess owners have more details on this they can let me know and we
-will update this list._
-
-All in all a good and solid website packed with usefull features. Visually it
-is probably the best on this list. Stuff lacking is focus on user privacy and
-seemingly weird free tier constrains.
-
-### Invoice Generator Pros
-
-- Good UI
-- A lot of available invoice details
-- Good dashboard with nice charts
-
-### Invoice Generator Cons
-
-- Unclear data storing policy
-- No way to download anonimously
-- Seemingly weird and anoying free tier limits
-
-## 4. Invoice Maker (invoicemaker.com)
-
-[Invoice Maker](https://invoicemaker.com) is a very simple to use invoice
-generating website. The website itself is very nicely designed. Form is simple
-but good enough for any kind of invoice.
-
-This website offers a very nice value for the free, no account tier. You can
-create an invoice anonimously and download a pdf, after which they will
-politely ask for your email address, you can of course reject this offer
-_(invoicegenerator.com could learn something from this)_.
-
-Invoice maker also has a very bih asortment of free pdf and excel templates
-that are surelly useful even by themselves.
-
-Generated invoice looks good, except there is a big ugly
-"Made with Invoice Maker" tag at the bottom. I don't think anyone will see that
-and head over to the website _(maybe I am wrong tho)_. There is no way to
-customize the invoice with the accountless tier.
-
-Everything they did good in the accountless tier, they ruined with the free
-account tier. This one gives you 0 invoices. So while you had no account you
-had more rights on this website. Totally weird behaviour. Why punish me for
-wanting to sign up to your service?
-
-All in all a good experience while not signed in, only thing is that there is
-no way to save your invoices up untill you start to pay some of the
-subscription plans.
-
-### Invoice Maker Pros
-
-- There is a preview you can use before download
-- No need for an account to generate an invoice
-
-### Invoice Maker Cons
-
-- Made with "Invoice Maker" tag at the bottom of invoices
-- Free account tier totally useless
-- No invoice saving untill a paid tier
 
 ## 5. Invoice Fly (invoicefly.com)
 

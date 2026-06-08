@@ -15,7 +15,7 @@ export default function HelpPage() {
         <h2 className="mt-10 text-2xl font-bold">How to create an invoice?</h2>
         <p className="text-lg">
           In order to create an invoice fill out the{' '}
-          <Link href="/" className="text-blue-700 underline">
+          <Link href="/" className="link">
             inovice form
           </Link>
           :
@@ -73,10 +73,7 @@ export default function HelpPage() {
         <p className="text-lg">
           If you have any problems or questions make sure to contact the main
           developer at{' '}
-          <a
-            href="mailto:mihailonvojinovic@gmail.com"
-            className="text-blue-700 underline"
-          >
+          <a href="mailto:mihailonvojinovic@gmail.com" className="link">
             mihailonvojinovic@gmail.com
           </a>
           . We usually respond in a day.

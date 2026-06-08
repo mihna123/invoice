@@ -11,7 +11,7 @@ export default async function Blog(props: Params) {
 
   return (
     <section className="mt-10 flex justify-center">
-      <div className="w-5xl space-y-4">
+      <div className="w-5xl space-y-4 mb-10">
         <h1 className="m-0 mb-2 text-4xl font-bold">{blog.title}</h1>
         <p>
           by{' '}

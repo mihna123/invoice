@@ -4,7 +4,7 @@ import type { MetadataRoute } from 'next';
 export default function sitemap(): MetadataRoute.Sitemap {
   const blogs = getAllBlogs();
   const blogUrls = blogs.map((blog) => ({
-    url: `https://free-incoices.org/blogs/${blog.slug}`,
+    url: `https://free-invoices.org/blogs/${blog.slug}`,
     lastModified: new Date(),
     changeFrequency: 'yearly' as const,
     priority: 0.8,

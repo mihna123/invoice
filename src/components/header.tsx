@@ -9,7 +9,7 @@ export const Header = () => {
         </Link>
         <ul className="flex gap-2">
           <li>
-            <Link href="/blog">Blog</Link>
+            <Link href="/blogs">Blogs</Link>
           </li>
           <li>
             <Link href="/help">Help</Link>

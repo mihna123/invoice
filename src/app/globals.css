@@ -17,3 +17,32 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.link,
+.markdown a {
+  @apply text-blue-900 underline hover:bg-blue-900 hover:text-white;
+}
+
+.markdown {
+  @apply space-y-4 text-lg leading-relaxed;
+}
+
+.markdown h1 {
+  @apply text-3xl font-bold;
+}
+
+.markdown h2 {
+  @apply text-2xl font-semibold;
+}
+
+.markdown h3 {
+  @apply text-xl font-semibold;
+}
+
+.markdown ul {
+  @apply list-disc pl-8;
+}
+
+.markdown ol {
+  @apply list-decimal pl-8;
+}
